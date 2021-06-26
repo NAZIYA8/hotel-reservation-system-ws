@@ -35,4 +35,9 @@ public class Hotel {
 	public void setRegularCustomerRate(int regularCustomerRate) {
 		this.regularCustomerRate = regularCustomerRate;
 	}
+
+	@Override
+	public String toString() {
+		return "Hotel Name: " + hotelName + ", Regular Rate: $" + regularCustomerRate;
+	}
 }

@@ -11,7 +11,10 @@
 
 package com.bridgelabz.HotelReservationSystem;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
@@ -41,6 +44,33 @@ public class HotelReservation {
 	}
 
 	/**
+	 * This method is used to get the cheapest Hotel.
+	 */
+	public static void getCheapestHotel() {
+		Date startDate = null;
+		Date endDate = null;
+		System.out.println("Enter Start Date in ddMMYYYY");
+		String start = scanner.next();
+		System.out.println("Enter end date in ddMMYYYY");
+		String end = scanner.next();
+		try {
+			startDate = new SimpleDateFormat("ddMMyyyy").parse(start);
+			endDate = new SimpleDateFormat("ddMMyyyy").parse(end);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		long numberOfDays = (endDate.getTime() - startDate.getTime()) / 1000 / 60 / 60 / 24;
+		int minCost = hotelList.get(0).getRegularCustomerRate();
+		String cheapestHotelName = hotelList.get(0).getHotelName();
+		for (int i = 1; i < hotelList.size(); i++)
+			if (hotelList.get(i).getRegularCustomerRate() < minCost) {
+				minCost = hotelList.get(i).getRegularCustomerRate();
+				cheapestHotelName = hotelList.get(i).getHotelName();
+			}
+		System.out.println(cheapestHotelName + " ,Total Cost: " + minCost * numberOfDays);
+	}
+
+	/**
 	 * This is the main method of the program.
 	 *
 	 * @param args
@@ -48,5 +78,8 @@ public class HotelReservation {
 	public static void main(String[] args) {
 		System.out.println("Welcome to Hotel Reservation System");
 		addHotel();
+		System.out.println("Enter dates for finding cheapest hotel");
+		getCheapestHotel();
+		System.out.println(hotelList);
 	}
 }
